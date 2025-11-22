@@ -4,6 +4,7 @@ import json
 import subprocess
 import os
 import urllib.parse
+import sys
 
 PORT = 8000
 
@@ -24,7 +25,7 @@ class CustomHandler(http.server.SimpleHTTPRequestHandler):
             try:
                 # Run the main script to generate cache
                 result = subprocess.run(
-                    ['python3', '../src/main.py', '--code-postal', postal_code], 
+                    [sys.executable, 'src/main.py', '--code-postal', postal_code], 
                     capture_output=True, 
                     text=True, 
                     cwd=os.path.dirname(os.path.abspath(__file__))
