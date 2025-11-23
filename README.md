@@ -110,4 +110,4 @@ Code source sous licence MIT.
 
 ## Auteur
 
-Développé par [Kyworn](https://github.com/Kyworn)
+Développé par [Kyworn](https://github.com/Kyworn) avec l'assistance de **Antigravity** (Google).
