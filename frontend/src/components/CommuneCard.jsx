@@ -2,14 +2,12 @@ import { useState } from 'react'
 import { isParameterCompliant, formatResultValue } from '../utils'
 import TrendsChart from './TrendsChart'
 import Tooltip from './Tooltip'
-import MapComponent from './MapComponent'
 import { glossary } from '../glossary'
 
 const CommuneCard = ({ commune }) => {
     const [activeCategory, setActiveCategory] = useState(commune.categories[0] || null)
     const [expandedHistory, setExpandedHistory] = useState({}) // { "paramName": boolean }
     const [expandedChart, setExpandedChart] = useState({}) // { "paramName": boolean }
-    const [showMap, setShowMap] = useState(false)
 
     const toggleHistory = (paramName) => {
         setExpandedHistory(prev => ({
@@ -70,20 +68,10 @@ const CommuneCard = ({ commune }) => {
                     {commune.commune_name} ({commune.insee})
                 </h3>
                 <div className="flex gap-2">
-                    <button onClick={() => setShowMap(!showMap)} className="text-sm text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 cursor-pointer font-medium">
-                        {showMap ? 'Masquer carte' : 'Voir carte'}
-                    </button>
-                    <span className="text-gray-300 dark:text-gray-600">|</span>
                     <button onClick={() => exportData('csv')} className="text-sm text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 cursor-pointer">Export CSV</button>
                     <button onClick={() => exportData('json')} className="text-sm text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 cursor-pointer">Export JSON</button>
                 </div>
             </div>
-
-            {showMap && (
-                <div className="p-4 bg-gray-100 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-600">
-                    <MapComponent data={commune.data} />
-                </div>
-            )}
 
             {/* Category Tabs - Improved Navigation (Wrapped) */}
             <div className="border-b border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 px-4 py-2">

@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { filterAndCategorizeData, groupDataByParameter } from './utils'
 import ThemeToggle from './components/ThemeToggle'
 import CommuneCard from './components/CommuneCard'
+import HomeMap from './components/HomeMap'
 
 function App() {
   const [postalCode1, setPostalCode1] = useState('')
@@ -9,6 +10,7 @@ function App() {
   const [results, setResults] = useState([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
+  const [showHomeMap, setShowHomeMap] = useState(true)
 
   const fetchCommuneData = async (code) => {
     if (!code) return null;
@@ -41,6 +43,7 @@ function App() {
     setLoading(true)
     setError(null)
     setResults([])
+    setShowHomeMap(false) // Hide map on search to focus on results
 
     try {
       const promises = []
@@ -99,6 +102,12 @@ function App() {
             </button>
           </form>
         </div>
+
+        {showHomeMap && (
+          <div className="mt-8 max-w-4xl mx-auto">
+            <HomeMap setPostalCode={setPostalCode1} />
+          </div>
+        )}
 
         {error && (
           <div className="mt-8 max-w-lg mx-auto bg-red-50 dark:bg-red-900/30 p-4 rounded-md">

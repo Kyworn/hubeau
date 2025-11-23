@@ -52,7 +52,7 @@ const MapComponent = ({ data }) => {
     const center = [(minLat + maxLat) / 2, (minLng + maxLng) / 2];
 
     return (
-        <div className="h-96 w-full rounded-lg overflow-hidden shadow-lg z-0 relative">
+        <div className="h-96 w-full rounded-lg overflow-hidden shadow-lg z-10 relative border border-gray-200 dark:border-gray-700">
             <MapContainer center={center} zoom={12} scrollWheelZoom={false} style={{ height: '100%', width: '100%' }}>
                 <TileLayer
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
