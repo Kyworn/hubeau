@@ -64,8 +64,16 @@ const HomeMap = ({ setPostalCode }) => {
     const center = [46.603354, 1.888334];
 
     return (
-        <div className="h-96 w-full rounded-lg overflow-hidden shadow-lg z-0 relative border border-gray-200 dark:border-gray-700 mt-8">
-            <MapContainer center={center} zoom={6} scrollWheelZoom={true} style={{ height: '100%', width: '100%' }}>
+        <div className="h-[600px] w-full rounded-lg overflow-hidden shadow-lg z-0 relative border border-gray-200 dark:border-gray-700 mt-8">
+            <MapContainer
+                center={center}
+                zoom={6}
+                minZoom={3}
+                maxBounds={[[-90, -180], [90, 180]]}
+                maxBoundsViscosity={1.0}
+                scrollWheelZoom={true}
+                style={{ height: '100%', width: '100%' }}
+            >
                 <TileLayer
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
