@@ -20,7 +20,8 @@ def load_postal_mapping(mapping_file):
 async def fetch_water_quality(session, insee_code):
     params = {
         "code_commune": insee_code,
-        "size": 1000  # Fetch more results to ensure we get full analyses
+        "size": 1000,  # Fetch more results to ensure we get full analyses
+        "fields": "code_departement,nom_departement,code_prelevement,code_parametre,libelle_parametre,resultat_alphanumerique,resultat_numerique,libelle_unite,limite_qualite_parametre,reference_qualite_parametre,code_commune,nom_commune,date_prelevement,conclusion_conformite_prelevement,conformite_limites_bact_prelevement,conformite_limites_pc_prelevement,conformite_references_bact_prelevement,conformite_references_pc_prelevement,longitude,latitude"
     }
     try:
         async with session.get(API_URL, params=params) as response:
