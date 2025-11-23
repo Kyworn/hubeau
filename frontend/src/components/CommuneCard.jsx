@@ -3,6 +3,8 @@ import { isParameterCompliant, formatResultValue } from '../utils'
 import TrendsChart from './TrendsChart'
 import Tooltip from './Tooltip'
 import { glossary } from '../glossary'
+import jsPDF from 'jspdf'
+import autoTable from 'jspdf-autotable'
 
 const CommuneCard = ({ commune }) => {
     const [activeCategory, setActiveCategory] = useState(commune.categories[0] || null)
@@ -21,6 +23,91 @@ const CommuneCard = ({ commune }) => {
             ...prev,
             [paramName]: !prev[paramName]
         }))
+    }
+
+    const generatePDF = () => {
+        const doc = new jsPDF();
+        const data = commune.data;
+        const date = new Date().toLocaleDateString();
+
+        // Header
+        doc.setFontSize(20);
+        doc.setTextColor(40, 40, 40);
+        doc.text("Rapport Qualité de l'Eau Potable", 14, 22);
+
+        doc.setFontSize(12);
+        doc.setTextColor(100, 100, 100);
+        doc.text(`Commune : ${commune.commune_name} (${commune.insee})`, 14, 32);
+        doc.text(`Date du rapport : ${date}`, 14, 38);
+
+        // Compliance Summary
+        const totalParams = data.length;
+        const nonCompliant = data.filter(d => !isParameterCompliant(d));
+        const isGlobalCompliant = nonCompliant.length === 0;
+
+        doc.setDrawColor(200, 200, 200);
+        doc.line(14, 45, 196, 45);
+
+        doc.setFontSize(14);
+        doc.setTextColor(0, 0, 0);
+        doc.text("Synthèse de conformité", 14, 55);
+
+        doc.setFontSize(12);
+        if (isGlobalCompliant) {
+            doc.setTextColor(0, 150, 0);
+            doc.text("✅ L'eau est conforme aux limites de qualité pour tous les paramètres analysés.", 14, 65);
+        } else {
+            doc.setTextColor(200, 0, 0);
+            doc.text(`⚠️ ${nonCompliant.length} paramètre(s) non conforme(s) détecté(s).`, 14, 65);
+        }
+
+        // Table Data Preparation
+        const tableRows = data.map(item => {
+            const compliant = isParameterCompliant(item);
+            const ref = item.reference_qualite_parametre || item.limite_qualite_parametre || '-';
+            return [
+                item.libelle_parametre,
+                `${formatResultValue(item.resultat_alphanumerique || item.resultat_numerique)}`,
+                item.libelle_unite,
+                ref,
+                compliant ? 'Conforme' : 'Non conforme'
+            ];
+        });
+
+        // Table
+        autoTable(doc, {
+            startY: 75,
+            head: [['Paramètre', 'Résultat', 'Unité', 'Référence', 'Conformité']],
+            body: tableRows,
+            theme: 'grid',
+            headStyles: { fillColor: [79, 70, 229] }, // Indigo-600
+            styles: { fontSize: 9 },
+            columnStyles: {
+                0: { cellWidth: 60 },
+                4: { fontStyle: 'bold' }
+            },
+            didParseCell: function (data) {
+                if (data.section === 'body' && data.column.index === 4) {
+                    if (data.cell.raw === 'Non conforme') {
+                        data.cell.styles.textColor = [200, 0, 0];
+                    } else {
+                        data.cell.styles.textColor = [0, 150, 0];
+                    }
+                }
+            }
+        });
+
+        // Footer
+        const pageCount = doc.internal.getNumberOfPages();
+        for (let i = 1; i <= pageCount; i++) {
+            doc.setPage(i);
+            doc.setFontSize(8);
+            doc.setTextColor(150, 150, 150);
+            doc.text('Données issues de l\'API Hub\'Eau - Généré par Hubeau App', 14, doc.internal.pageSize.height - 10);
+            doc.text(`Page ${i} / ${pageCount}`, doc.internal.pageSize.width - 20, doc.internal.pageSize.height - 10);
+        }
+
+        doc.save(`rapport_hubeau_${commune.insee}.pdf`);
     }
 
     const exportData = (format) => {
@@ -68,6 +155,13 @@ const CommuneCard = ({ commune }) => {
                     {commune.commune_name} ({commune.insee})
                 </h3>
                 <div className="flex gap-2">
+                    <button onClick={generatePDF} className="text-sm text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 cursor-pointer font-medium flex items-center gap-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                        </svg>
+                        PDF
+                    </button>
+                    <span className="text-gray-300 dark:text-gray-600">|</span>
                     <button onClick={() => exportData('csv')} className="text-sm text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 cursor-pointer">Export CSV</button>
                     <button onClick={() => exportData('json')} className="text-sm text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 cursor-pointer">Export JSON</button>
                 </div>
