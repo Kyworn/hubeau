@@ -2,7 +2,7 @@
 
 Une application web **premium** et **haute performance** pour visualiser la qualité de l'eau potable en France en temps réel, utilisant les données ouvertes de l'API Hub'Eau.
 
-![Preview](screenshots/preview.png)
+
 
 ## ✨ Caractéristiques Clés
 
