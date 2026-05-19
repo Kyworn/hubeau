@@ -44,4 +44,17 @@ Application web permettant de consulter et comparer la qualité de l'eau potable
 L'application sera accessible sur `http://localhost:3000`.
 
 ## Données
-Les données proviennent de l'API Hub'Eau du portail Eau France, sous Licence Ouverte Etalab 2.0.
+
+Cette application exploite les données de l'API **Hub'Eau - Qualité de l'eau potable**, fournies par le portail **Eau France**.
+
+### Nature des données
+- **Source** : Résultats du contrôle sanitaire des eaux destinées à la consommation humaine, collectés par les Agences Régionales de Santé (ARS).
+- **Contenu** : Analyses microbiologiques, physico-chimiques et radiologiques réalisées sur les réseaux de distribution.
+- **Fréquence** : Les données sont mises à jour régulièrement par le Ministère de la Santé et accessibles via les serveurs du BRGM.
+- **Licence** : Les données sont mises à disposition sous la **Licence Ouverte Etalab 2.0**.
+
+### Avertissement
+L'application affiche les derniers résultats disponibles mais ne se substitue pas aux publications officielles des mairies ou des ARS. Les seuils de conformité affichés sont basés sur les limites et références de qualité fixées par la réglementation française.
+
+## Données Techniques
+Le projet utilise un mapping local (`postal_to_insee.json`) pour faire la correspondance entre les codes postaux saisis par l'utilisateur et les codes INSEE requis par l'API Hub'Eau.
