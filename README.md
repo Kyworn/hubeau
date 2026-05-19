@@ -1,51 +1,38 @@
-# Hub'Eau - Qualité de l'Eau en France
+# Hub'Eau - Qualité de l'Eau en France (Reworked)
 
-Une application web moderne et interactive pour visualiser la qualité de l'eau potable en France en temps réel, utilisant les données ouvertes de l'API Hub'Eau.
+Une application web **premium** et **haute performance** pour visualiser la qualité de l'eau potable en France en temps réel, utilisant les données ouvertes de l'API Hub'Eau.
 
-![Home Map](screenshots/home_map.png)
+![Preview](screenshots/preview.png)
 
-## Aperçu
+## ✨ Caractéristiques Clés
 
-Cette application permet aux citoyens français de consulter facilement les analyses de qualité de l'eau potable de leur commune. Elle offre une interface moderne, responsive et riche en fonctionnalités pour explorer ces données vitales.
+- **Interface Bento Grid** 🍱 : Visualisation moderne et structurée des paramètres de l'eau.
+- **Glassmorphism Design** 💎 : Design épuré avec des effets de transparence et un mode sombre élégant.
+- **Carte Interactive** 🗺️ : Sélection de commune par clic sur carte avec géocodage inverse.
+- **Comparaison Avancée** 🆚 : Comparez les résultats de deux communes côte à côte avec des indicateurs de conformité clairs.
+- **Visualisation de Données** 📈 : Graphiques d'évolution historique pour chaque paramètre (via Recharts).
+- **Exports Multi-formats** 💾 : Téléchargement des rapports en **PDF**, **CSV** ou **JSON**.
+- **Glossaire Pédagogique** 🎓 : Explications détaillées sur les substances analysées.
 
-### Fonctionnalités Clés
+## 🛠️ Stack Technique
 
-- **Carte Interactive** 🗺️ : Sélectionnez votre commune directement sur une carte de France.
-- **Recherche par Code Postal** 📮 : Entrez simplement votre code postal pour accéder aux résultats.
-- **Mode Comparaison** 🆚 : Comparez la qualité de l'eau de deux communes côte à côte.
-- **Visualisation de Données** 📈 : Graphiques d'évolution pour les paramètres historiques.
-- **Indicateurs de Conformité** ✅ : Bordures vertes/rouges pour identifier rapidement les problèmes.
-- **Mode Sombre** 🌙 : Interface élégante et reposante pour les yeux (thème "Slate").
-- **Pédagogie** 🎓 : Tooltips explicatifs pour comprendre les paramètres (Nitrates, pH, etc.).
-- **Export de Données** 💾 : Téléchargez les résultats en CSV ou JSON.
+Le projet a été intégralement réécrit avec une stack de pointe :
 
-## Screenshots
+- **Frontend** : [Next.js 15 (App Router)](https://nextjs.org/), [React 19](https://react.dev/)
+- **Langage** : [TypeScript](https://www.typescriptlang.org/)
+- **Styling** : [TailwindCSS v4](https://tailwindcss.com/)
+- **Animations** : [Framer Motion](https://www.framer.com/motion/)
+- **Data Fetching** : [TanStack Query v5](https://tanstack.com/query/latest)
+- **Cartographie** : [Leaflet](https://leafletjs.com/) & [React-Leaflet](https://react-leaflet.js.org/)
+- **Graphiques** : [Recharts](https://recharts.org/)
+- **Génération PDF** : [jsPDF](https://github.com/parallax/jsPDF)
 
-### Mode Comparaison
-Comparez les résultats de deux villes (ex: Bordeaux vs Lyon).
-![Comparison Mode](screenshots/comparison.png)
-
-### Mode Sombre et Tooltips
-Une interface soignée avec des explications contextuelles.
-![Dark Mode](screenshots/dark_mode.png)
-
-## Technologies
-
-Le projet a été modernisé avec une stack technique robuste :
-
-- **Frontend** : React 18, Vite, TailwindCSS v4
-- **Backend** : FastAPI (Python), Uvicorn
-- **API** : Hub'Eau (données ouvertes)
-- **Cartographie** : Leaflet, React-Leaflet, OpenStreetMap
-- **Graphiques** : Recharts
-
-## Installation
+## 🚀 Installation
 
 ### Prérequis
 
 - Node.js (v18+)
-- Python 3.8+
-- Git
+- npm ou pnpm
 
 ### 1. Cloner le repository
 
@@ -54,60 +41,24 @@ git clone https://github.com/Kyworn/hubeau.git
 cd hubeau
 ```
 
-### 2. Backend (FastAPI)
+### 2. Installer les dépendances
 
 ```bash
-# Créer un environnement virtuel
-python -m venv venv
-source venv/bin/activate  # Sur Windows: venv\Scripts\activate
-
-# Installer les dépendances
-pip install -r requirements.txt
-
-# Lancer le serveur API (port 8001)
-uvicorn api:app --reload --port 8001
+npm install
 ```
 
-### 3. Frontend (React)
-
-Ouvrez un nouveau terminal :
+### 3. Lancer l'application
 
 ```bash
-cd frontend
-
-# Installer les dépendances
-npm install
-
-# Lancer le serveur de développement (port 5173)
 npm run dev
 ```
 
-### 4. Accéder à l'application
+Ouvrez votre navigateur sur [http://localhost:3000](http://localhost:3000).
 
-Ouvrez votre navigateur sur [http://localhost:5173](http://localhost:5173).
+## 📄 Données
 
-## Structure du Projet
+Ce projet utilise les données publiques de l'API Hub'Eau (Eau France) sous [Licence Ouverte etalab 2.0](https://www.etalab.gouv.fr/licence-ouverte-open-licence).
 
-```
-hubeau/
-├── api.py                  # Application FastAPI
-├── src/
-│   └── main.py             # Script de récupération des données (API Hub'Eau)
-├── frontend/               # Application React
-│   ├── src/
-│   │   ├── components/     # Composants (CommuneCard, HomeMap, etc.)
-│   │   ├── App.jsx         # Composant principal
-│   │   └── ...
-│   └── ...
-├── data/                   # Cache des données JSON
-└── screenshots/            # Images pour le README
-```
+## 👨‍💻 Auteur
 
-## Licence
-
-Ce projet utilise des données publiques sous [Licence Ouverte etalab 2.0](https://www.etalab.gouv.fr/licence-ouverte-open-licence).
-Code source sous licence MIT.
-
-## Auteur
-
-Développé par [Kyworn](https://github.com/Kyworn) avec l'assistance de **Antigravity** (Google).
+Développé avec passion par [Kyworn](https://github.com/Kyworn) et l'assistance de **Antigravity** (Google).
